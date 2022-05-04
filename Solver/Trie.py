@@ -1,4 +1,4 @@
-# create a Trie Node class
+import pickle
 class TrieNode:
     def __init__(self, char):
         self.char = char
@@ -47,3 +47,13 @@ class Trie:
         self.dfs(node, x[:-1])
  
         return self.output
+
+def serializeTrie():
+    tr = Trie()
+
+    with open("./Data/words_alpha.txt") as readfile:
+        for word in readfile:
+            tr.insert(word.strip())
+
+    with open("./Data/trie.pickle", "wb") as writefile:
+        pickle.dump(tr, writefile)
