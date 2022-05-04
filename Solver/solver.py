@@ -1,9 +1,10 @@
-# Ported by me from Nathan Ang's C++ solver
+# Ported by me from Nathan Ang's C++ solver and CoderSnacks's Boggle Solver
 # https://github.com/nathan-149/WordHunt-Solver/blob/master/wordhunt_solver.cpp
 # https://medium.com/@nathan_149/never-lose-in-wordhunt-again-with-computer-science-bb09ad5015ee
 
 from trie import Trie
 import pickle
+import collections
 
 class Solver:
     tr = Trie()
@@ -11,23 +12,15 @@ class Solver:
         with open("./Data/trie.pickle", "rb") as readfile:
             self.tr = pickle.load(readfile)
 
-    def __recurse(self, row, col, word, path, board, visited, ans):
-        # print(path)
-        if row < 0 or row >= 4 or col < 0 or col >= 4:
-            return ans
-        if visited[row][col]:
-            return ans
-        
-        letter = board[row][col]
-        word = word + letter
-        searchOut = self.tr.search(word)
-        if len(searchOut) == 0:
-            return ans
-        if len(word) > 3 and word in searchOut:
-            print("word found, ", word) 
-            # ans[word] = path
-            
-        visited[row][col] = True
+    def __recurse(self, row, col, word, path, board, visited):
+        found = {}
+        if not self.tr.search(word, True):
+            return found
+        else:
+            if self.tr.search(word):
+                found[word] = path
+                if len(word) == 16:
+                    return found
 
         directions = {
             "D": (1, 0),
@@ -43,14 +36,20 @@ class Solver:
         for direction in directions:
             newRow = row + directions[direction][0]
             newCol = col + directions[direction][1]
-            if newRow >= 0 and newRow < 4 and newCol >= 0 and newCol < 4:
+            if newRow >= 0 and newRow < 4 and newCol >= 0 and newCol < 4 and not visited[newRow][newCol]:
+                visited[newRow][newCol] = True
                 path.append((newRow, newCol))
-                ans = self.__recurse(newRow, newCol, word, path, board, visited, ans)
+                word += board[newRow][newCol]
+                self.__merge(found, self.__recurse(newRow, newCol, word, path, board, visited))
+                visited[row][col] = False
+        return found
 
-        visited[row][col] = False
         
     def __get_len(key):
         return len(key[0])
+    
+    def __merge(dict1, dict2):
+        return(dict1.update(dict2))
     
     def __sort_by_keylen(self, dict):
         dict_list = list(dict.items())
@@ -73,7 +72,7 @@ class Solver:
 
         for i in range(4):
             for j in range(4):
-                ans = self.__recurse(i, j, "", [(i,j)], board, [[False] * 4] * 4, {})
+                ans = self.__recurse(i, j, "", [(i,j)], board, [[False] * 4] * 4)
 
         return ans
 
