@@ -1,52 +1,28 @@
 import pickle
-class TrieNode:
-    def __init__(self, char):
-        self.char = char
-        self.children = {}
-        self.is_end = False
+import collections
 
-# create a Trie class
-class Trie:
+# Trie implementation from https://www.youtube.com/watch?v=FFQ-nbul6VY
+
+class Trie(object):
     def __init__(self):
-        self.root = TrieNode("") # root doesn't have a character
+        self.children = collections.defaultdict(Trie)
+        self.complete = False
 
-    def insert(self, word):
-        node = self.root
-        for char in word:
-            
-            if char in node.children:
-                node = node.children[char]
-            
+    def insert(self, s):
+        if not s:
+            self.complete = True # if end of word, mark it as complete in trie
+        else:
+            self.children[s[0]].insert(s[1:]) # continue trie using first letter of word, pass along rest of word
+
+    def search(self, s, prefix_check=False):
+        if not s:
+            return prefix_check or self.complete # if end of word and is still going, prefix must exist
+        else:
+            if s[0] in self.children:
+                return self.children[s[0]].search(s[1:], prefix_check)
             else:
-                new_node = TrieNode(char)
-                node.children[char] = new_node
-                node = new_node
+                return False
 
-        node.is_end = True
-
-    def dfs(self, node, pre):
- 
-       if node.is_end:
-           self.output.append((pre + node.char))
-        
-       for child in node.children.values():
-           self.dfs(child, pre + node.char)
-
-    def search(self, x):
-        
-        node = self.root
-         
-        for char in x:
-            if char in node.children:
-                node = node.children[char]
-            else:
-               
-                return []
-         
-        self.output = []
-        self.dfs(node, x[:-1])
- 
-        return self.output
 
 def serializeTrie():
     tr = Trie()
