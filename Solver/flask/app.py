@@ -1,11 +1,15 @@
 # flask server for the solver
 from flask import Flask, request
 from solver import Solver
-from trie import Trie, serializeTrie
+from trie import serializeTrie
 import json
 
 app = Flask(__name__)
 solver = Solver()
+
+@app.route('/', methods=['GET'])
+def hello():
+    return "<p>This is an API for an iMessage word hunt solver. Use a POST to the /solve endpoint with a 'board' field formatted as 'abcdefghijklmnop' to return possible words</p>"
 
 @app.route('/solve', methods=['POST'])
 def solve():
@@ -18,3 +22,5 @@ def serialize():
     solver = Solver()
     return "Done"
 
+if __name__ == "__main__":
+    app.run()
