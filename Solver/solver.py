@@ -7,6 +7,9 @@ from trie import Trie
 import pickle
 import collections
 
+def get_len(key):
+    return len(key[0]) * -1
+
 class Solver:
     tr = Trie()
     def __init__(self):
@@ -42,24 +45,40 @@ class Solver:
         return found
     
     def solve(self, boardString):
+
+        #check for invalid boards
         try:
             if len(boardString) != 16:
                 return ["Invalid board string"]
         except TypeError:
             return ["Invalid input type"]
 
+        #construct board from string
         ans = []
         board = [[], [], [], []]
         for i in range(4):
             for j in range(4):
                 board[i].append(boardString[i*4+j])
 
+        #perform actual solving using recursive dfs
         for i in range(4):
             for j in range(4):
                 visited = [[False for _ in range(4)] for _ in range(4)]
                 visited[i][j] = True
                 ans += self.__recurse(i, j, board[i][j], [(i,j)], board)
-        print(ans)
-        return ans
+
+        #filter duplicates and convert list of tuples into a dictionary
+        ansdict = {}
+        for word,path in ans:
+            if word[0] not in ansdict:
+                ansdict[word[0]] = path
+        
+        #sort the dictionary by key length
+        dictlist = list(ansdict.items())
+        dictlist.sort(key=get_len)
+
+        ansdict = {ele[0] : ele[1] for ele in dictlist}
+
+        return ansdict
 
 
