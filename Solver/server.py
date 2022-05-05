@@ -14,7 +14,7 @@ def solve():
 
 @app.route('/reserialize', methods=['GET'])
 def serialize():
-    Trie.serializeTrie()
+    serializeTrie()
     solver = Solver()
     return "Done"
 

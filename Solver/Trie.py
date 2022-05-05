@@ -29,7 +29,8 @@ def serializeTrie():
 
     with open("./Data/words_alpha.txt") as readfile:
         for word in readfile:
-            tr.insert(word.strip())
+            if len(word) > 3:
+                tr.insert(word.strip())
 
     with open("./Data/trie.pickle", "wb") as writefile:
         pickle.dump(tr, writefile)

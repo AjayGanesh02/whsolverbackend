@@ -14,3 +14,9 @@ class TestSolverMethods(unittest.TestCase):
 
     def test_solve_invalid_type(self):
         self.assertEqual(self.solver.solve(1), ["Invalid input type"])
+
+    def test_solve_alphabet(self):
+        self.assertTrue(len(self.solver.solve("abcdefghijklmnop")) > 0)
+
+if __name__ == '__main__':
+    unittest.main()

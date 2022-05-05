@@ -1,6 +1,7 @@
 # Ported by me from Nathan Ang's C++ solver and CoderSnacks's Boggle Solver
 # https://github.com/nathan-149/WordHunt-Solver/blob/master/wordhunt_solver.cpp
 # https://medium.com/@nathan_149/never-lose-in-wordhunt-again-with-computer-science-bb09ad5015ee
+# https://www.youtube.com/watch?v=FFQ-nbul6VY
 
 from trie import Trie
 import pickle
@@ -13,14 +14,12 @@ class Solver:
             self.tr = pickle.load(readfile)
 
     def __recurse(self, row, col, word, path, board, visited):
-        found = {}
+        found = []
         if not self.tr.search(word, True):
             return found
         else:
-            if self.tr.search(word):
-                found[word] = path
-                if len(word) == 16:
-                    return found
+            if len(word) > 3 and self.tr.search(word):
+                found.append(([word], path))
 
         directions = {
             "D": (1, 0),
@@ -38,25 +37,12 @@ class Solver:
             newCol = col + directions[direction][1]
             if newRow >= 0 and newRow < 4 and newCol >= 0 and newCol < 4 and not visited[newRow][newCol]:
                 visited[newRow][newCol] = True
-                path.append((newRow, newCol))
-                word += board[newRow][newCol]
-                self.__merge(found, self.__recurse(newRow, newCol, word, path, board, visited))
+                newpath = path + [(newRow, newCol)]
+                newword = word + board[newRow][newCol]
+                found += self.__recurse(newRow, newCol, newword, newpath, board, visited)
                 visited[row][col] = False
         return found
-
-        
-    def __get_len(key):
-        return len(key[0])
     
-    def __merge(dict1, dict2):
-        return(dict1.update(dict2))
-    
-    def __sort_by_keylen(self, dict):
-        dict_list = list(dict.items())
-        dict_list.sort(key = self.__get_len)
-        res = {ele[0] : ele[1] for ele in dict_list}
-        return res
-
     def solve(self, boardString):
         try:
             if len(boardString) != 16:
@@ -64,7 +50,7 @@ class Solver:
         except TypeError:
             return ["Invalid input type"]
 
-        ans = {}
+        ans = []
         board = [[], [], [], []]
         for i in range(4):
             for j in range(4):
@@ -72,8 +58,10 @@ class Solver:
 
         for i in range(4):
             for j in range(4):
-                ans = self.__recurse(i, j, "", [(i,j)], board, [[False] * 4] * 4)
-
+                visited = [[False for _ in range(4)] for _ in range(4)]
+                visited[i][j] = True
+                ans += self.__recurse(i, j, board[i][j], [(i,j)], board, visited)
+        print(ans)
         return ans
 
 
