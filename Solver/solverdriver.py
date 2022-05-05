@@ -5,4 +5,4 @@ serializeTrie()
 
 s = Solver()
 
-print(s.solve("abcdefghijklmnop"))
+print(s.solve("dehnktmbcrenfadt"))
