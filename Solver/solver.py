@@ -13,12 +13,12 @@ class Solver:
         with open("./Data/trie.pickle", "rb") as readfile:
             self.tr = pickle.load(readfile)
 
-    def __recurse(self, row, col, word, path, board, visited):
+    def __recurse(self, row, col, word, path, board):
         found = []
         if not self.tr.search(word, True):
             return found
         else:
-            if len(word) > 3 and self.tr.search(word):
+            if len(word) > 2 and self.tr.search(word):
                 found.append(([word], path))
 
         directions = {
@@ -35,12 +35,10 @@ class Solver:
         for direction in directions:
             newRow = row + directions[direction][0]
             newCol = col + directions[direction][1]
-            if newRow >= 0 and newRow < 4 and newCol >= 0 and newCol < 4 and not visited[newRow][newCol]:
-                visited[newRow][newCol] = True
+            if newRow >= 0 and newRow < 4 and newCol >= 0 and newCol < 4 and (newRow, newCol) not in path:
                 newpath = path + [(newRow, newCol)]
                 newword = word + board[newRow][newCol]
-                found += self.__recurse(newRow, newCol, newword, newpath, board, visited)
-                visited[row][col] = False
+                found += self.__recurse(newRow, newCol, newword, newpath, board)
         return found
     
     def solve(self, boardString):
@@ -60,7 +58,7 @@ class Solver:
             for j in range(4):
                 visited = [[False for _ in range(4)] for _ in range(4)]
                 visited[i][j] = True
-                ans += self.__recurse(i, j, board[i][j], [(i,j)], board, visited)
+                ans += self.__recurse(i, j, board[i][j], [(i,j)], board)
         print(ans)
         return ans
 
