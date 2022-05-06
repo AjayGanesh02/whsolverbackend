@@ -6,13 +6,5 @@ services:
       - app:/app
     ports:
       - '5000:5000'
-    
-  proxy:
-    build: nginx
-    restart: always
-    ports:
-      - 80:80
-    depends_on:
-      - app
 volumes:
   app:
