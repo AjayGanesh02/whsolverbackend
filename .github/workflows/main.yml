@@ -2,7 +2,7 @@ name: Deployment From Github To AWS
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
