@@ -1,4 +1,0 @@
-build:
-  docker:
-    web: flask/Dockerfile
-    web: nginx/Dockerfile
