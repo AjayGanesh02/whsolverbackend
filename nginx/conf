@@ -1,0 +1,13 @@
+server {
+    listen       80;
+    
+    location / {
+        proxy_pass   http://app:5000;
+    }
+    location /solve {
+        proxy_pass   http://app:5000/solve;
+    }
+    location /reserialize {
+        proxy_pass   http://app:5000/reserialize;
+    }
+}
