@@ -1,4 +1,3 @@
 build:
   docker:
     web: Solver/flask/Dockerfile
-    web: Solver/nginx/Dockerfile
