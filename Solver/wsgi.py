@@ -1,4 +1,4 @@
-from app import app
+from application import application
 
 if __name__ == "__main__":
-    app.run(threaded=True, port=5000)
+    application.run(threaded=True, port=5000)
