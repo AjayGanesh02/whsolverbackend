@@ -10,6 +10,9 @@ jobs:
       - name: Checkout Latest Repo
         uses: actions/checkout@master
 
+      - name: Navigate to directory
+        run: cd Solver/
+
       - name: Generate Deployment Package 
         run: zip -r deploy.zip .
 
