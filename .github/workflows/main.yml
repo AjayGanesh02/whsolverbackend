@@ -10,11 +10,8 @@ jobs:
       - name: Checkout Latest Repo
         uses: actions/checkout@master
 
-      - name: Navigate to directory
-        run: cd Solver/
-
       - name: Generate Deployment Package 
-        run: zip -r deploy.zip .
+        run: cd Solver/ && zip -r deploy.zip .
 
       - name: Get timestamp
         uses: gerred/actions/current-time@master
