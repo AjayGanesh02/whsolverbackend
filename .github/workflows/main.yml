@@ -35,4 +35,4 @@ jobs:
           environment_name: Whsolver-env
           version_label: "whsolver-${{ steps.format-time.outputs.replaced }}"
           region: us-east-2
-          deployment_package: deploy.zip
+          deployment_package: Solver/deploy.zip
