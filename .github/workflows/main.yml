@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Generate Deployment Package 
-        run: cd Solver/ && zip -r deploy.zip .
+        run: zip -r deploy.zip .
 
       - name: Get timestamp
         uses: gerred/actions/current-time@master
@@ -35,4 +35,4 @@ jobs:
           environment_name: Whsolver-env
           version_label: "whsolver-${{ steps.format-time.outputs.replaced }}"
           region: us-east-2
-          deployment_package: Solver/deploy.zip
+          deployment_package: deploy.zip
