@@ -9,7 +9,7 @@ solver = Solver()
 
 @application.route('/', methods=['GET'])
 def hello():
-    return "<p>This is an API for an iMessage word hunt solver. Use a POST to the /solve endpoint with a 'board' field formatted as 'abcdefghijklmnop' to return possible words</p>"
+    return "<p>This is an API for an iMessage word hunt solver. Use a GET to the /solve endpoint with a 'board' field formatted as 'abcdefghijklmnop' to return possible words</p>"
 
 @application.route('/solve')
 def solve():
