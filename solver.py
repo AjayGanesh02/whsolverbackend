@@ -77,7 +77,7 @@ class Solver:
         dictlist = list(ansdict.items())
         dictlist.sort(key=get_len)
 
-        ansdict = {ele[0] : ele[1] for ele in dictlist}
+        ansdict = {{ "word": ele[0], "path" : ele[1]} for ele in dictlist}
 
         return ansdict
 
