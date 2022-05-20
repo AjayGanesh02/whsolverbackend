@@ -1,8 +1,8 @@
 # flask server for the solver
 from flask import Flask, request
 from solver import Solver
-from trie import serializeTrie
 import json
+import os
 
 application = Flask(__name__)
 solver = Solver()
