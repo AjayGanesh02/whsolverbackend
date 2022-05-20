@@ -17,4 +17,4 @@ def solve():
     return json.dumps(solver.solve(boardString), indent = 4)
 
 if __name__ == "__main__":
-    application.run(threaded=True, port=5000)
+    application.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
