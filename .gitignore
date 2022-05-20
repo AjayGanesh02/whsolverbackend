@@ -1,6 +1,5 @@
-Solver/__pycache__
-Solver/solverdriver.py
-Solver/.pytest_cache
+__pycache__
+solverdriver.py
 .pytest_cache
 venv/
 venv/*
