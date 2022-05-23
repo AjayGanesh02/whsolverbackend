@@ -16,7 +16,7 @@ def hello():
 @application.route('/solve')
 def solve():
     boardString = request.args.get('board')
-    return json.dumps(solver.solve(boardString), indent = 4)
+    return json.dumps({"data" : solver.solve(boardString)}, indent = 4)
 
 if __name__ == "__main__":
     application.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
