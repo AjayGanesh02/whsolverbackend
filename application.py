@@ -1,10 +1,12 @@
 # flask server for the solver
 from flask import Flask, request
+from flask_cors import CORS
 from solver import Solver
 import json
 import os
 
 application = Flask(__name__)
+CORS(application)
 solver = Solver()
 
 @application.route('/', methods=['GET'])
