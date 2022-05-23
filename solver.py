@@ -50,6 +50,8 @@ class Solver:
         try:
             if len(boardString) != 16:
                 return ["Invalid board string"]
+            if not boardString.isalnum():
+                return ["Invalid board string"]
         except TypeError:
             return ["Invalid input type"]
 
