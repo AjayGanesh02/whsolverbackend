@@ -16,6 +16,9 @@ def hello():
 @application.route('/solve')
 def solve():
     boardString = request.args.get('board')
+    sortstring = request.args.get('sort')
+    if sortstring == "false":
+        return json.dumps({"data" : solver.solve(boardString.lower(), False)}, indent = 4)    
     return json.dumps({"data" : solver.solve(boardString.lower())}, indent = 4)
 
 if __name__ == "__main__":
