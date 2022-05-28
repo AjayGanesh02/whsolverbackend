@@ -44,7 +44,7 @@ class Solver:
                 found += self.__recurse(newRow, newCol, newword, newpath, board)
         return found
     
-    def solve(self, boardString):
+    def solve(self, boardString, sort=True):
 
         #check for invalid boards
         try:
@@ -69,15 +69,17 @@ class Solver:
                 visited[i][j] = True
                 ans += self.__recurse(i, j, board[i][j], [(i,j)], board)
 
-        #filter duplicates and convert list of tuples into a dictionary
+        #filter duplicates and convert list of tuples into a dictionary if sort is true
         ansdict = {}
         for word,path in ans:
             if word[0] not in ansdict:
                 ansdict[word[0]] = path
         
-        #sort the dictionary by key length
         dictlist = list(ansdict.items())
-        dictlist.sort(key=get_len)
+        
+        if sort:        
+            #sort the dictionary by key length
+            dictlist.sort(key=get_len)
 
         ansdict = [{"word": ele[0], "path": ele[1]} for ele in dictlist] 
 
