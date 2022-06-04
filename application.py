@@ -18,8 +18,8 @@ def solve():
     boardString = request.args.get('board')
     sortstring = request.args.get('sort')
     if sortstring == "false":
-        return json.dumps({"data" : solver.solve(boardString.lower(), False)}, indent = 4)    
-    return json.dumps({"data" : solver.solve(boardString.lower())}, indent = 4)
+        return json.dumps({"data" : solver.solve(boardString.upper(), False)}, indent = 4)    
+    return json.dumps({"data" : solver.solve(boardString.upper())}, indent = 4)
 
 if __name__ == "__main__":
     application.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
